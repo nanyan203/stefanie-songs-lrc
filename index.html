@@ -17,13 +17,22 @@
         font-family: 'Microsoft YaHei', sans-serif;
       }
 
+      /* 新增移动端基础样式 */
+      :root {
+        --min-tap-size: 48px;
+      }
+
       body {
-        background: url('./images/就在日落以后.jpg') no-repeat center top fixed;
-        background-size: auto 100vh; /* 保持宽高比，高度适应视口 */
-        min-height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url('./images/就在日落以后.jpg');
+        background-size: contain;
+        background-repeat: repeat;
+        background-position: center center;
         padding: 20px;
         color: #333;
         transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-text-size-adjust: 100%;
       }
 
       .header {
@@ -116,7 +125,10 @@
         width: 90%;
         max-width: 400px;
         height: 100%;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url('./images/就在日落以后.jpg');
+        background-size: contain;
+        background-position: center center;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease-in-out; /* 添加过渡动画 */
         z-index: 1000;
@@ -151,6 +163,15 @@
         color: #7f8c8d;
       }
 
+      /* 移动端适配 */
+      @media (max-width: 768px) {
+        .songs-panel,
+        .lyrics-panel {
+          background-size: contain;
+          background-repeat: repeat;
+        }
+      }
+
       .songs-list {
         list-style: none;
       }
@@ -172,11 +193,12 @@
 
       .song-title {
         font-size: 1.1rem;
+        color: #d35400;
         font-weight: 500;
       }
 
       .song-id {
-        color: #95a5a6;
+        color: #d35400;
         font-size: 0.9rem;
       }
 
@@ -188,7 +210,10 @@
         width: 90%;
         max-width: 400px;
         height: 100%;
-        background: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url('./images/就在日落以后.jpg');
+        background-size: contain;
+        background-position: center bottom;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease-in-out; /* 添加过渡动画 */
         z-index: 1001;
@@ -219,7 +244,39 @@
         font-size: 1.1rem;
         line-height: 1.8;
         white-space: pre-line;
-        color: #2c3e50;
+        color: #d35400;
+      }
+
+      .lyrics-section {
+        position: relative;
+        padding: 1rem 0;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+      }
+
+      .lyrics-section p {
+        padding: 0.8em 0;
+        position: relative;
+      }
+
+      .lyrics-section p:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 10%;
+        right: 10%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scaleY(0.5);
+      }
+
+      .song-container {
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url('./images/克卜勒 (No.12).jpg');
+        background-size: cover;
+        background-attachment: local;
+        padding: 2rem;
       }
 
       .overlay {
@@ -257,6 +314,21 @@
         .lyrics-panel {
           width: 85%;
         }
+
+        .lyrics-section p:not(:last-child)::after {
+          left: 5%;
+          right: 5%;
+          background: rgba(0, 0, 0, 0.1);
+        }
+
+        .song-container {
+          background-position: 60% center;
+          padding: 1rem;
+        }
+
+        .lyrics-section {
+          background: rgba(255, 255, 255, 0.95);
+        }
       }
 
       @media (max-width: 480px) {
@@ -288,6 +360,31 @@
           padding: 15px 10px;
         }
       }
+
+
+
+      @media (orientation: portrait) {
+        .banner {
+          background-size: auto 120%;
+          background-position: top center;
+        }
+      }
+
+      /* 移动端优先方案 */
+      @media (max-width: 480px) {
+        .banner {
+          background-image: url('./images/克卜勒-mobile.jpg');
+          aspect-ratio: 9/16;
+        }
+      }
+
+      /* 高清设备适配 */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .banner {
+          background-image: url('./images/克卜勒@2x.jpg');
+        }
+      }
+
       /* 在样式表末尾添加 */
       @media (max-width: 768px) {
         body {
@@ -298,9 +395,28 @@
 
       @media (max-width: 480px) {
         body {
-          background-image: url('./images/就在日落以后_small.jpg'); /* 使用专门优化的小尺寸背景图 */
+          background-image: url('./images/就在日落以后.jpg'); /* 使用现有背景图 */
           background-size: cover;
           background-position: 40% center;
+        }
+      }
+      /* 优化触摸元素 */
+      .song-item {
+        padding: 1.2rem;
+        min-height: var(--min-tap-size);
+      }
+
+      @media (max-width: 768px) {
+        /* 移动端专属样式 */
+        .album-art {
+          width: 100vw;
+          margin-left: -1rem;
+        }
+
+        .lyrics-section {
+          font-size: 1.1em;
+          line-height: 1.8;
+          padding: 0 1.2rem;
         }
       }
     </style>
@@ -1573,7 +1689,6 @@
                             <span class="song-id">${song.id}.</span>
                             <span class="song-title">${song.title}</span>
                         </div>
-                        <span>查看歌词</span>
                     `
 
             songItem.addEventListener('click', () => {
